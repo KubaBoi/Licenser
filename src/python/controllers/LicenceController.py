@@ -34,7 +34,7 @@ class LicenceController(cc):
             Error.sendCustomError(server, "Unknown licence", 401)
             return
 
-        response = cc.createResponse({"LICENCE": licence.type}, 200)
+        response = cc.createResponse({"LICENCE": licence[0].type}, 200)
         cc.sendResponse(server, response)
 
     #@get /generate
