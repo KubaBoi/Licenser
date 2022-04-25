@@ -14,7 +14,8 @@ from cheese.ErrorCodes import Error
 from python.authorization import Authorization
 
 #REST CONTROLLERS
-from python.controllers.LicenceController import Licence
+from python.controllers.HelloWorldController import HelloWorldController
+from python.controllers.LicenceController import LicenceController
 
 
 """
@@ -44,9 +45,19 @@ class CheeseHandler(BaseHTTPRequestHandler):
 
             if (path == "/"):
                 CheeseController.serveFile(self, "index.html")
+            elif (path.startswith("/hello")):
+                if (path.startswith("/hello/world")):
+                    HelloWorldController.helloWorld(self, self.path, auth)
+                else:
+                    if (self.path.endswith(".css")):
+                        CheeseController.serveFile(self, self.path, "text/css")
+                    else:
+                        CheeseController.serveFile(self, self.path)
             elif (path.startswith("/licence")):
                 if (path.startswith("/licence/authLic")):
-                    Licence.authLic(self, self.path, auth)
+                    LicenceController.authLic(self, self.path, auth)
+                elif (path.startswith("/licence/generate")):
+                    LicenceController.generate(self, self.path, auth)
                 else:
                     if (self.path.endswith(".css")):
                         CheeseController.serveFile(self, self.path, "text/css")
@@ -67,7 +78,9 @@ class CheeseHandler(BaseHTTPRequestHandler):
         try:
             auth = None
 
-            if (self.path.startswith("/licence")):
+            if (self.path.startswith("/hello")):
+                pass
+            elif (self.path.startswith("/licence")):
                 pass
             else:
                 Error.sendCustomError(self, "Endpoint not found :(", 404)
