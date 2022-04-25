@@ -25,7 +25,6 @@ class Cheese:
     def init():
         # initialization of root directory
         ResMan.setPath(Path(__file__).parent.parent.parent)
-        Cheese.printInit()
 
         # loads application settings
         Settings.loadSettings()
@@ -33,14 +32,15 @@ class Cheese:
         #init logger
         Logger.initLogger()
 
-        # log new line
-        Logger.info(10*"=" + f"Start in file {ResMan.path}" + 10*"=" + "\n", False, False)
-
         # init errors
         Error.init()
 
         # check licence
         Cheese.loadLicence()
+        Cheese.printInit()
+
+        # log new line
+        Logger.info(10*"=" + f"Start in file {ResMan.path}" + 10*"=" + "\n", False, False)
 
         # connect to database
         if (Settings.allowDB):
@@ -93,6 +93,7 @@ class Cheese:
             properties = json.loads(f.read())
             print(f"Cheese Framework            (v{properties['release']})")
             print(properties['documentation'])
+            print("License: " + Settings.activeLicense)
             print("")
 
     # loads licence
