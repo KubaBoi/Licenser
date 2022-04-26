@@ -51,7 +51,7 @@ class Cheese:
                 db.close()
                 Logger.okBlue(f"CONNECTED TO {Settings.dbHost}:{Settings.dbPort} {Settings.dbName}", silence=False)
             except Exception as e:
-                Logger.fail(f"CONNECTION TO {Settings.dbHost}:{Settings.dbPort} {Settings.dbName} CANNOT BE DONE:{Logger.WARNING}\n{str(e)}", silence=False)
+                Logger.fail(f"CONNECTION TO {Settings.dbHost}:{Settings.dbPort} {Settings.dbName} CANNOT BE DONE", e, silence=False)
         else:
             Logger.warning("Database connection is turned off", silence=False)
 
@@ -100,8 +100,8 @@ class Cheese:
     @staticmethod
     def loadLicence():
         try:
-            r = requests.get(f"http://frogie.cz:6969/license/authLic?code={Settings.licenseCode}")
-            Settings.activeLicense = json.loads(r.text)["LICENSE"]
+            r = requests.get(f"http://frogie.cz:6969/licence/authLic?code={Settings.licenseCode}")
+            Settings.activeLicense = json.loads(r.text)["LICENCE"]
         except Exception as e:
             Logger.warning("Unable to contact licensing server", silence=False)
 

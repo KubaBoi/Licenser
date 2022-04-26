@@ -8,6 +8,7 @@ import time
 from http.cookies import SimpleCookie
 
 from cheese.resourceManager import ResMan
+from cheese.appSettings import Settings
 from cheese.Logger import Logger
 
 """
@@ -56,14 +57,17 @@ class CheeseController:
 
     # return arguments from rest request url
     @staticmethod
-    def getArgs(url):
+    def getArgs(url, decode=True):
         arguments = {}
         argsArray = url.split("?")
         if (len(argsArray) > 1):
             argsArray = argsArray[1].split("&")
             for arg in argsArray:
                 spl = arg.split("=")
-                arguments[spl[0]] = spl[1]
+                if (decode):
+                    arguments[spl[0]] = unquote(spl[1])
+                else:
+                    arguments[spl[0]] = spl[1]
         return arguments
 
     # return bytes from post body
@@ -124,7 +128,7 @@ class CheeseController:
                 CheeseController.sendResponse(server, (f.read(), 404))
             return
 
-        if (file.endswith(".html")):
+        if (file.endswith(".html") and not CheeseController.checkLicense()):
             with open(f"{file}", "r", encoding="utf-8") as f:
                 data = f.read()
                 if (data.find("</body>") != -1):
@@ -144,3 +148,10 @@ class CheeseController:
         server.end_headers()
 
         server.wfile.write(response[0])
+
+    # checks license
+    @staticmethod
+    def checkLicense():
+        if (Settings.activeLicense == "me" or Settings.activeLicense == "full access"):
+            return True
+        return False
