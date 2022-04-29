@@ -58,6 +58,30 @@ class LicenceController(cc):
         response = cc.createResponse({"LICENSE": license.toJson()}, 200)
         cc.sendResponse(server, response)
 
+    #@get /get
+    @staticmethod
+    def get(server, path, auth):
+        args = cc.getArgs(path)
+
+        if (not cc.validateJson(["name", "pass"], args)):
+            Error.sendCustomError(server, "Wrong json structure", 400)
+            return
+
+        name = args["name"]
+        passw = args["pass"]
+
+        if (name != "kuba" or passw != "heslo"):
+            Error.sendCustomError(server, "Unauthorized", 401)
+            return
+        
+        licenses = LicencesRepository.findAll()
+
+        jsonArray = cc.modulesToJsonArray(licenses)
+
+        response = cc.createResponse({"LICENSES": jsonArray}, 200)
+        cc.sendResponse(server, response)
+
+
     # METHODS
 
     @staticmethod

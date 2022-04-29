@@ -49,6 +49,8 @@ class CheeseHandler(BaseHTTPRequestHandler):
                     LicenceController.authLic(self, self.path, auth)
                 elif (path.startswith("/licence/generate")):
                     LicenceController.generate(self, self.path, auth)
+                elif (path.startswith("/licence/get")):
+                    LicenceController.get(self, self.path, auth)
                 else:
                     if (self.path.endswith(".css")):
                         CheeseController.serveFile(self, self.path, "text/css")
