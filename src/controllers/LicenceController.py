@@ -4,14 +4,12 @@
 import random
 import string
 
-from cheese.resourceManager import ResMan
-from cheese.modules.cheeseController import CheeseController as cc
-from cheese.ErrorCodes import Error
-from cheese.appSettings import Settings
+from Cheese.resourceManager import ResMan
+from Cheese.cheeseController import CheeseController as cc
+from Cheese.ErrorCodes import Error
+from Cheese.appSettings import Settings
 
-from python.repositories.licencesRepository import LicencesRepository
-
-from python.models.licences import Licences
+from src.repositories.licencesRepository import LicencesRepository
 
 #@controller /licence
 class LicenceController(cc):
@@ -26,7 +24,7 @@ class LicenceController(cc):
             return
 
         code = args["code"]
-        licence = LicencesRepository.findBy("columnName-code", code)
+        licence = LicencesRepository.findBy("code", code)
 
         if (licence == None):
             Error.sendCustomError(server, "Unknown licence", 401)
