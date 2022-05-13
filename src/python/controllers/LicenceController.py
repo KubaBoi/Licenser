@@ -7,6 +7,7 @@ import string
 from cheese.resourceManager import ResMan
 from cheese.modules.cheeseController import CheeseController as cc
 from cheese.ErrorCodes import Error
+from cheese.appSettings import Settings
 
 from python.repositories.licencesRepository import LicencesRepository
 
@@ -64,15 +65,11 @@ class LicenceController(cc):
         args = cc.getArgs(path)
 
         if (not cc.validateJson(["name", "pass"], args)):
-            Error.sendCustomError(server, "Wrong json structure", 400)
-            return
+            return cc.createResponse({"ERROR": "Wrong json structure"}, 400)
 
-        name = args["name"]
-        passw = args["pass"]
-
-        if (name != "kuba" or passw != "heslo"):
-            Error.sendCustomError(server, "Unauthorized", 401)
-            return
+        if (args["name"] != Settings.getName and
+            args["pass"] != Settings.getPass):
+            return cc.createResponse({"ERROR": "Unauthorized"}, 401)
         
         licenses = LicencesRepository.findAll()
 
