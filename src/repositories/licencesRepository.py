@@ -3,9 +3,9 @@
 
 from Cheese.cheeseRepository import CheeseRepository
 
-#@repository licences
-#@dbscheme (id, code, type)
-#@dbmodel Licence
+#@repository licences;
+#@dbscheme (id, code, type);
+#@dbmodel Licence;
 class LicencesRepository(CheeseRepository):
 	pass
 

@@ -11,10 +11,10 @@ from Cheese.appSettings import Settings
 
 from src.repositories.licencesRepository import LicencesRepository
 
-#@controller /licence
+#@controller /licence;
 class LicenceController(cc):
 
-    #@get /authLic
+    #@get /authLic;
     @staticmethod
     def authLic(server, path, auth):
         args = cc.getArgs(path)
@@ -35,7 +35,7 @@ class LicenceController(cc):
 
         return cc.createResponse({"LICENCE": licence[0].type}, 200)
 
-    #@get /generate
+    #@get /generate;
     @staticmethod
     def generate(server, path, auth):
         args = cc.getArgs(path)
@@ -53,7 +53,7 @@ class LicenceController(cc):
         LicencesRepository.save(license)
         return cc.createResponse({"LICENSE": license.toJson()}, 200)
 
-    #@get /get
+    #@get /get;
     @staticmethod
     def get(server, path, auth):
         args = cc.getArgs(path)
