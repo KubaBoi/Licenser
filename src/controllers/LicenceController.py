@@ -33,8 +33,7 @@ class LicenceController(cc):
             Error.sendCustomError(server, "Unknown licence", 401)
             return
 
-        response = cc.createResponse({"LICENCE": licence[0].type}, 200)
-        cc.sendResponse(server, response)
+        return cc.createResponse({"LICENCE": licence[0].type}, 200)
 
     #@get /generate
     @staticmethod
@@ -47,15 +46,12 @@ class LicenceController(cc):
 
         type = args["type"]
 
-        newId = LicencesRepository.findNewId()
-        license = Licences()
-        license.id = newId
+        license = LicencesRepository.model()
         license.code = LicenceController.generateLicense()
         license.type = type
 
         LicencesRepository.save(license)
-        response = cc.createResponse({"LICENSE": license.toJson()}, 200)
-        cc.sendResponse(server, response)
+        return cc.createResponse({"LICENSE": license.toJson()}, 200)
 
     #@get /get
     @staticmethod
@@ -73,8 +69,7 @@ class LicenceController(cc):
 
         jsonArray = cc.modulesToJsonArray(licenses)
 
-        response = cc.createResponse({"LICENSES": jsonArray}, 200)
-        cc.sendResponse(server, response)
+        return cc.createResponse({"LICENSES": jsonArray}, 200)
 
 
     # METHODS
