@@ -21,7 +21,7 @@ if __name__ == "__main__":
             req = {
                 "name": Settings.name,
                 "port": Settings.port,
-                "icon": "/images/icon256.png",
+                "icon": "/icon.png",
                 "color": "FF0000"
             }
             requests.post(f"http://localhost/services/doYouKnowMe", json=req)
