@@ -31,7 +31,7 @@ if __name__ == "__main__":
         except:
             i += 1
             if (i >= 10): break
-            print("Unauble to reach FrogieHub")
+            print("Unable to reach FrogieHub")
             time.sleep(1)
 
     CheeseBurger.serveForever()
